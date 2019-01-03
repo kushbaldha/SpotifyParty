@@ -86,6 +86,26 @@ app.get('/callback', function(req, res) {
       json: true
     };
 
+    var searchSongs = function (query) {
+    	console.log('print');
+      console.log(access_token);
+      // var searchoptions = {
+      //   url: 'https://api.spotify.com/v1/search',
+      //   headers: { 'Authorization': 'Bearer ' + access_token },
+      //   qs: {
+      //     q: 'championships',
+      //     type: 'album'
+      // },
+      //   json: true
+      // };
+      // request.get(searchoptions, function(error, response, body) {
+      //   console.log(body);
+      // });
+    };
+
+
+
+
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
@@ -97,11 +117,25 @@ app.get('/callback', function(req, res) {
           headers: { 'Authorization': 'Bearer ' + access_token },
           json: true
         };
-
+        //search options
+        var searchoptions = {
+          url: 'https://api.spotify.com/v1/search',
+          headers: { 'Authorization': 'Bearer ' + access_token },
+          qs: {
+           q: 'championships',
+           type: 'album'
+       },
+          json: true
+        };
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
-          console.log(body);
+            console.log(body);
         });
+        // request.get(searchoptions, function(error, response, body) {
+        //     console.log(body);
+        // });
+        //search for album
+
 
         // we can also pass the token to the browser to make requests from there
         res.redirect('/#' +
@@ -118,6 +152,7 @@ app.get('/callback', function(req, res) {
     });
   }
 });
+
 
 app.get('/refresh_token', function(req, res) {
 
